@@ -44,19 +44,18 @@ class CustomHeadConfigTest {
 
     @Test
     void whenHeaderIsEnabledByDefault_thenHeaderIsPresent() throws Exception {
-        // Свойство custom.http.header.enabled не установлено, должно быть true по умолчанию (matchIfMissing = true)
+
         mockMvc.perform(get("/test"))
                 .andExpect(status().isOk())
                 .andExpect(header().string("Foo", "Bar"));
 
-        // Проверяем, что бин FilterRegistrationBean был создан
         FilterRegistrationBean<?> filterRegBean = context.getBean("fooBarHeaderFilterRegistrationBean", FilterRegistrationBean.class);
         assertThat(filterRegBean).isNotNull();
         assertThat(filterRegBean.getFilter()).isInstanceOf(FooBarHeaderFilter.class);
         System.out.println("Test (Default enabled): FooBarHeaderFilterRegistrationBean found.");
     }
 
-    // Вложенный класс для теста с явно включенным свойством
+    // Тест включенным свойством
     @SpringBootTest(classes = {CustomHeadConfigTest.TestApplication.class, CustomHeadConfig.class})
     @AutoConfigureMockMvc
     @TestPropertySource(properties = "custom.http.header.enabled=true")
