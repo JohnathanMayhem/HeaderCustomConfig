@@ -19,7 +19,6 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-// Базовый класс для тестов, чтобы не дублировать @RestController
 @SpringBootTest(classes = {CustomHeadConfigTest.TestApplication.class, CustomHeadConfig.class})
 @AutoConfigureMockMvc
 class CustomHeadConfigTest {
@@ -30,7 +29,6 @@ class CustomHeadConfigTest {
     @Autowired
     private ApplicationContext context;
 
-    // Минимальное веб-приложение для тестов
     @Configuration
     static class TestApplication {
         @RestController
@@ -55,7 +53,7 @@ class CustomHeadConfigTest {
         System.out.println("Test (Default enabled): FooBarHeaderFilterRegistrationBean found.");
     }
 
-    // Тест включенным свойством
+    // Тест c включенным свойством
     @SpringBootTest(classes = {CustomHeadConfigTest.TestApplication.class, CustomHeadConfig.class})
     @AutoConfigureMockMvc
     @TestPropertySource(properties = "custom.http.header.enabled=true")
@@ -78,7 +76,7 @@ class CustomHeadConfigTest {
         }
     }
 
-    // Вложенный класс для теста с выключенным свойством
+    // Тест с выключенным свойством
     @SpringBootTest(classes = {CustomHeadConfigTest.TestApplication.class, CustomHeadConfig.class})
     @AutoConfigureMockMvc
     @TestPropertySource(properties = "custom.http.header.enabled=false")
